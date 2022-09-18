@@ -4,14 +4,11 @@ namespace Codecool.LifeOfAnts.Ants
 {
     internal class Worker : Ant
     {
-        public Worker(Position pos, Colony colony) : base(pos)
+        public Worker(Position pos, Colony colony) : base(pos, colony)
         {
-            Colony = colony;
         }
 
-        public override char Symbol => throw new NotImplementedException();
-
-        public Func<Position> GetRandomPosInColony { get; }
+        public override char Symbol => 'w';
 
         public override void Act()
         {

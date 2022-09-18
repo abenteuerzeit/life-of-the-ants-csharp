@@ -2,12 +2,17 @@
 {
     public abstract class Ant
     {
-        protected Position _position;
+        public Position _position;
 
         protected Ant(Position pos)
         {
             _position = pos;
-            //Colony = colony;
+        }
+
+        protected Ant(Position pos, Colony colony)
+        {
+            _position = pos;
+            Colony = colony;
         }
 
         public abstract char Symbol { get; }

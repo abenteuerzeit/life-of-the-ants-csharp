@@ -4,14 +4,11 @@ namespace Codecool.LifeOfAnts.Ants
 {
     internal class Drone : Ant
     {
-        public Drone(Position pos, Colony colony) : base(pos)
+        public Drone(Position pos, Colony colony) : base(pos, colony)
         {
-            Colony = colony;
         }
 
-        public override char Symbol => throw new NotImplementedException();
-
-        public Func<Position> GetRandomPosInColony { get; }
+        public override char Symbol => 'd';
 
         public override void Act()
         {

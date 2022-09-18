@@ -15,6 +15,9 @@ namespace Codecool.LifeOfAnts
         public static void Main()
         {
             Console.WriteLine("Hello, Ants!");
+            Colony colony = new(12);
+            colony.GenerateAnts(3, 3, 3);
+            colony.Display();
         }
     }
 }

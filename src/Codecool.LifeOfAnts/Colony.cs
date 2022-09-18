@@ -8,9 +8,9 @@ namespace Codecool.LifeOfAnts
     public class Colony
     {
         public int Width { get; }
-        private Queen Queen;
+        private readonly Queen Queen;
         private List<Ant> _ants;
-        private Dictionary<Position, List<Ant>> _colonyMap;
+        private readonly Dictionary<Position, List<Ant>> _colonyMap;
 
         public Colony(int width)
         {
@@ -30,7 +30,7 @@ namespace Codecool.LifeOfAnts
                 _ants.Add(new Drone(GetRandomPosInColony(), this));
             }
 
-            for (int j = 0; j < workerCount; j++)
+            for (int i = 0; i < workerCount; i++)
             {
                 _ants.Add(new Worker(GetRandomPosInColony(), this));
             }
@@ -39,30 +39,64 @@ namespace Codecool.LifeOfAnts
             {
                 _ants.Add(new Soldier(GetRandomPosInColony(), this));
             }
+
+            foreach (Ant ant in _ants)
+            {
+                if (!_colonyMap.ContainsKey(ant._position))
+                {
+                    _colonyMap.Add(ant._position, new List<Ant>() { ant });
+                }
+                //_colonyMap[ant._position] = _ants.Add(ant, this);
+            }
         }
 
         public void Display()
         {
             Console.Clear();
-            var sb = new StringBuilder();
+            StringBuilder sb = new();
+            sb.Append("  ");
+            for (int i = 0; i < Width; i++)
+            {
+                sb.Append($"{i} ");
+            }
+            sb.AppendLine();
 
             for (int x = 0; x < Width; x++)
             {
+                sb.Append($"{x} ");
                 for (int y = 0; y < Width; y++)
                 {
                     var antsAtPoint = GetAntsAtPoint(x, y);
+
+                    if (antsAtPoint.Count == 0)
+                    {
+                        sb.Append("  ");
+                    }
+                    else if (antsAtPoint.Count == 1)
+                    {
+                        sb.Append($"{antsAtPoint[0].Symbol} ");
+                    }
+                    else
+                    {
+                        sb.Append("X ");
+                    }
                 }
+                sb.AppendLine();
             }
+            Console.WriteLine(sb);
         }
 
         private List<Ant> GetAntsAtPoint(int x, int y)
         {
-            var pos = new Position(x, y);
-            if (!_colonyMap.ContainsKey(pos))
+            var antsAtPoint = new List<Ant>();
+            foreach (Ant ant in _ants)
             {
-                _colonyMap.Add(pos, new List<Ant>());
+                if (ant._position.X == x && ant._position.Y == y)
+                {
+                    antsAtPoint.Add(ant);
+                }
             }
-            return _colonyMap[pos];
+            return antsAtPoint;
         }
 
         private Position GetRandomPosInColony()

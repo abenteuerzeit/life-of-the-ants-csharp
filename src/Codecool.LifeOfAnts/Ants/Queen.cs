@@ -8,7 +8,7 @@ namespace Codecool.LifeOfAnts.Ants
         {
         }
 
-        public override char Symbol => throw new NotImplementedException();
+        public override char Symbol => 'Q';
 
         public override void Act()
         {
