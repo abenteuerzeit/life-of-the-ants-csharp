@@ -1,6 +1,7 @@
 ﻿using Codecool.LifeOfAnts.Ants;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 
@@ -9,8 +10,8 @@ namespace Codecool.LifeOfAnts
     public class Colony
     {
         public int Width { get; }
-        private readonly Queen Queen;
-        private List<Ant> _ants;
+        private Queen Queen;
+        private readonly List<Ant> _ants;
         private readonly Dictionary<Position, List<Ant>> _colonyMap;
 
         public Colony(int width)
@@ -54,7 +55,8 @@ namespace Codecool.LifeOfAnts
             sb.Append("  ");
             for (int i = 0; i < Width; i++)
             {
-                sb.Append($"{i} ");
+                if (i < 10) sb.Append($"{i} ");
+                else sb.Append($"{i}");
             }
             sb.AppendLine();
 
@@ -85,22 +87,12 @@ namespace Codecool.LifeOfAnts
             Console.WriteLine(sb);
         }
 
-        private List<Ant> GetAntsAtPoint(int x, int y)
-        {
-            var antsAtPoint = new List<Ant>();
-            foreach (Ant ant in _ants)
-            {
-                if (ant._position.X == x && ant._position.Y == y)
-                {
-                    antsAtPoint.Add(ant);
-                }
-            }
-            return antsAtPoint;
-        }
+        private List<Ant> GetAntsAtPoint(int x, int y) => _ants.Where(ant => ant._position.X == x && ant._position.Y == y).ToList();
 
-        private Position GetRandomPosInColony()
-        {
-            return new Position(Program.Random.Next(Width), Program.Random.Next(Width));
-        }
+        private Position GetRandomPosInColony() => new(Program.Random.Next(Width), Program.Random.Next(Width));
+
+        public void Update() => _ants.ForEach(ant => ant.Act());
+
+        public Position GetQueenPos() => Queen._position;
     }
 }

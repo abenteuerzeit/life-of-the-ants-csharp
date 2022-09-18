@@ -18,6 +18,12 @@ namespace Codecool.LifeOfAnts
             Colony colony = new(12);
             colony.GenerateAnts(3, 3, 3);
             colony.Display();
+            while (true)
+            {
+                colony.Update();
+                colony.Display();
+                Console.ReadKey();
+            }
         }
     }
 }

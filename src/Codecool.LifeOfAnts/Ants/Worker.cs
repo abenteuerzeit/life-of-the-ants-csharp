@@ -8,11 +8,8 @@ namespace Codecool.LifeOfAnts.Ants
         {
         }
 
-        public override char Symbol => 'w';
+        public override char Symbol => 'W';
 
-        public override void Act()
-        {
-            throw new NotImplementedException();
-        }
+        public override void Act() => MoveInDirection((Direction)Program.Random.Next(4));
     }
 }

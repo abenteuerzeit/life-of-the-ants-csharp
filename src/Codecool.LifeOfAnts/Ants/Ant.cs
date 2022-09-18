@@ -24,16 +24,15 @@
         protected void MoveInDirection(Direction direction)
         {
             Position nextPos = _position.NextPosInDir(direction);
-            if (!IsValidMove(nextPos))
+            if (IsValidMove(nextPos))
             {
-                return;
+                _position = nextPos;
             }
-            _position = nextPos;
         }
 
         private bool IsValidMove(Position pos)
         {
-            return pos.X >= 0 && pos.X <= Colony.Width && pos.Y >= 0 && pos.Y <= Colony.Width;
+            return pos.X >= 0 && pos.X <= Colony.Width - 1 && pos.Y >= 0 && pos.Y <= Colony.Width - 1;
         }
     }
 }

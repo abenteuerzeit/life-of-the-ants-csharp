@@ -12,7 +12,7 @@ namespace Codecool.LifeOfAnts.Ants
 
         public override void Act()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Queen sits");
         }
     }
 }

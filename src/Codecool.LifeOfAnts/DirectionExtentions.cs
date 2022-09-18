@@ -10,10 +10,10 @@ namespace Codecool.LifeOfAnts
         {
             return dir switch
             {
-                Direction.North => new Position(x: 0, y: 1),
-                Direction.South => new Position(x: 0, y: -1),
-                Direction.East => new Position(x: -1, y: 0),
-                Direction.West => new Position(x: 1, y: 0),
+                Direction.North => new Position(x: 0, y: -1),
+                Direction.East => new Position(x: 1, y: 0),
+                Direction.South => new Position(x: 0, y: 1),
+                Direction.West => new Position(x: -1, y: 0),
                 _ => throw new System.ArgumentOutOfRangeException(dir.ToString()),
             };
         }
