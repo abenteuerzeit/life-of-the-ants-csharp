@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Codecool.LifeOfAnts
@@ -10,7 +11,7 @@ namespace Codecool.LifeOfAnts
     public class Colony
     {
         public int Width { get; }
-        private Queen Queen;
+        private readonly Queen _queen;
         private readonly List<Ant> _ants;
         private readonly Dictionary<Position, List<Ant>> _colonyMap;
 
@@ -19,11 +20,23 @@ namespace Codecool.LifeOfAnts
             Width = width;
             _ants = new List<Ant>();
 
-            Queen = new Queen(new Position(width / 2, width / 2));
-            _ants.Add(Queen);
+            _queen = new Queen(new Position(width / 2, width / 2));
+            _ants.Add(_queen);
 
             _colonyMap = new Dictionary<Position, List<Ant>>();
         }
+
+        private List<Ant> GetAntsAtPoint(int x, int y) => _ants.Where(ant => ant._position.X == x && ant._position.Y == y).ToList();
+
+        private Position GetRandomPosInColony() => new(Program.Random.Next(Width), Program.Random.Next(Width));
+
+        public void Update() => _ants.ForEach(ant => ant.Act());
+
+        public Position GetQueenPos() => _queen._position;
+
+        public bool IsQueenInMood() => _queen.IsReady();
+
+        public void SetQueenPartner(Drone drone) => _queen.Partner = drone;
 
         public void GenerateAnts(int droneCount, int workerCount, int soldierCount)
         {
@@ -86,15 +99,5 @@ namespace Codecool.LifeOfAnts
             }
             Console.WriteLine(sb);
         }
-
-        private List<Ant> GetAntsAtPoint(int x, int y) => _ants.Where(ant => ant._position.X == x && ant._position.Y == y).ToList();
-
-        private Position GetRandomPosInColony() => new(Program.Random.Next(Width), Program.Random.Next(Width));
-
-        public void Update() => _ants.ForEach(ant => ant.Act());
-
-        public Position GetQueenPos() => Queen._position;
-
-        public bool IsQueenInMood() => Queen.IsInTheMood();
     }
 }

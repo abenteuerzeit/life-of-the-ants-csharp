@@ -1,12 +1,10 @@
-﻿using System;
-
-namespace Codecool.LifeOfAnts.Ants
+﻿namespace Codecool.LifeOfAnts.Ants
 {
     internal class Queen : Ant
     {
         private int _feelingSexy;
         private bool _isWaitingForDrone;
-        public static Drone Partner { get; set; }
+        public Drone Partner { get; set; }
 
         public Queen(Position pos) : base(pos)
         {
@@ -22,14 +20,9 @@ namespace Codecool.LifeOfAnts.Ants
             _feelingSexy--;
         }
 
-        public bool IsInTheMood()
+        public bool IsReady()
         {
             return _isWaitingForDrone;
-        }
-
-        public static void SetPartner(Drone drone)
-        {
-            Partner = drone;
         }
     }
 }

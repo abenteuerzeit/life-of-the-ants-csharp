@@ -1,13 +1,10 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-
-namespace Codecool.LifeOfAnts.Ants
+﻿namespace Codecool.LifeOfAnts.Ants
 {
-    internal class Drone : Ant
+    public class Drone : Ant
     {
         private bool _isMating;
         private int _sexyTime = 10;
-        private Drone partner;
+        private Drone _partner;
 
         public Drone(Position pos, Colony colony) : base(pos, colony)
         {
@@ -26,10 +23,10 @@ namespace Codecool.LifeOfAnts.Ants
             if (Colony.IsQueenInMood())
             {
                 _isMating = true;
-                partner = this;
+                _partner = this;
             }
 
-            if (_isMating && partner == this)
+            if (_isMating && _partner == this)
             {
                 Mate();
             }
@@ -41,7 +38,7 @@ namespace Codecool.LifeOfAnts.Ants
 
         private void Mate()
         {
-            Queen.SetPartner(this);
+            Colony.SetQueenPartner(this);
             switch (_sexyTime)
             {
                 case > 0:
@@ -51,7 +48,7 @@ namespace Codecool.LifeOfAnts.Ants
                 default:
                     _isMating = false;
                     _sexyTime = 10;
-                    Queen.SetPartner(null);
+                    Colony.SetQueenPartner(null);
                     KickAway();
                     return;
             }
