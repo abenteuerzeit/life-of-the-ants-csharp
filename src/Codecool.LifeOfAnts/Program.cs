@@ -17,13 +17,13 @@ namespace Codecool.LifeOfAnts
             Console.WriteLine("Hello, Ants!");
             Colony colony = new(12);
             colony.GenerateAnts(3, 3, 3);
-            colony.Display();
-            while (true)
+            do
             {
-                colony.Update();
                 colony.Display();
-                Console.ReadKey();
-            }
+                colony.Update();
+            } while (isRunning());
         }
+
+        private static bool isRunning() => Console.ReadLine().ToLower() is not "q";
     }
 }
