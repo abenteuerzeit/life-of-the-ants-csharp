@@ -95,6 +95,6 @@ namespace Codecool.LifeOfAnts
 
         public Position GetQueenPos() => Queen._position;
 
-        public bool IsQueenInMood() => Queen.GetMood();
+        public bool IsQueenInMood() => Queen.IsInTheMood();
     }
 }

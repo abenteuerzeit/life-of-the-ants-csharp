@@ -25,6 +25,6 @@ namespace Codecool.LifeOfAnts
             } while (isRunning());
         }
 
-        private static bool isRunning() => Console.ReadLine().ToLower() is not "q";
+        private static bool isRunning() => true;//Console.ReadLine().ToLower() is not "q";
     }
 }

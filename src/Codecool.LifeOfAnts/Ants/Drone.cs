@@ -41,6 +41,7 @@ namespace Codecool.LifeOfAnts.Ants
 
         private void Mate()
         {
+            Queen.SetPartner(this);
             switch (_sexyTime)
             {
                 case > 0:
@@ -50,6 +51,7 @@ namespace Codecool.LifeOfAnts.Ants
                 default:
                     _isMating = false;
                     _sexyTime = 10;
+                    Queen.SetPartner(null);
                     KickAway();
                     return;
             }
