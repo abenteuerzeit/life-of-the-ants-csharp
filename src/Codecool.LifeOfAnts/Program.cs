@@ -7,6 +7,8 @@ namespace Codecool.LifeOfAnts
     /// </summary>
     public static class Program
     {
+        public static readonly Random Random = new();
+
         /// <summary>
         ///     Main method
         /// </summary>

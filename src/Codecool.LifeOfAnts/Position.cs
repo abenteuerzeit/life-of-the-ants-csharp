@@ -25,5 +25,15 @@
         ///     Gets Y coordinate
         /// </summary>
         public int Y { get; }
+
+        public static Position operator +(Position left, Position right)
+        {
+            return new Position(left.X + right.X, left.Y + right.Y);
+        }
+
+        public Position NextPosInDir(Direction direction)
+        {
+            return this + direction.ToVector();
+        }
     }
 }
