@@ -14,13 +14,14 @@ namespace Codecool.LifeOfAnts
         /// </summary>
         public static void Main()
         {
-            Console.WriteLine("Hello, Ants!");
             Colony colony = new(12);
             colony.GenerateAnts(3, 3, 3);
+            int timepassed = 0;
             do
             {
                 colony.Display();
                 colony.Update();
+                timepassed++;
             } while (isRunning());
         }
 

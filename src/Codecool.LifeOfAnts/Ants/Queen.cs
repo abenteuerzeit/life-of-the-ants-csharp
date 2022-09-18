@@ -4,6 +4,8 @@ namespace Codecool.LifeOfAnts.Ants
 {
     internal class Queen : Ant
     {
+        private int _feelingSexy;
+
         public Queen(Position pos) : base(pos)
         {
         }
@@ -12,7 +14,10 @@ namespace Codecool.LifeOfAnts.Ants
 
         public override void Act()
         {
-            Console.WriteLine("Queen sits");
+            _feelingSexy = _feelingSexy >= 0 ? _feelingSexy : Program.Random.Next(50, 101);
+            _feelingSexy--;
         }
+
+        public bool GetMood() => _feelingSexy == 0;
     }
 }

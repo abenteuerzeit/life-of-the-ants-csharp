@@ -94,5 +94,7 @@ namespace Codecool.LifeOfAnts
         public void Update() => _ants.ForEach(ant => ant.Act());
 
         public Position GetQueenPos() => Queen._position;
+
+        public bool IsQueenInMood() => Queen.GetMood();
     }
 }
