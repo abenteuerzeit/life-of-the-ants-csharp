@@ -1,6 +1,7 @@
 ﻿using Codecool.LifeOfAnts.Ants;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Codecool.LifeOfAnts
@@ -40,13 +41,9 @@ namespace Codecool.LifeOfAnts
                 _ants.Add(new Soldier(GetRandomPosInColony(), this));
             }
 
-            foreach (Ant ant in _ants)
+            foreach (Ant ant in _ants.Where(ant => !_colonyMap.ContainsKey(ant._position)))
             {
-                if (!_colonyMap.ContainsKey(ant._position))
-                {
-                    _colonyMap.Add(ant._position, new List<Ant>() { ant });
-                }
-                //_colonyMap[ant._position] = _ants.Add(ant, this);
+                _colonyMap.Add(ant._position, new List<Ant>() { ant });
             }
         }
 
