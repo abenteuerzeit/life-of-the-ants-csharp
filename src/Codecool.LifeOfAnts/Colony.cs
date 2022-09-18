@@ -63,19 +63,21 @@ namespace Codecool.LifeOfAnts
                 sb.Append($"{x} ");
                 for (int y = 0; y < Width; y++)
                 {
-                    var antsAtPoint = GetAntsAtPoint(x, y);
+                    List<Ant> antsAtPoint = GetAntsAtPoint(x, y);
 
-                    if (antsAtPoint.Count == 0)
+                    switch (antsAtPoint.Count)
                     {
-                        sb.Append("  ");
-                    }
-                    else if (antsAtPoint.Count == 1)
-                    {
-                        sb.Append($"{antsAtPoint[0].Symbol} ");
-                    }
-                    else
-                    {
-                        sb.Append("X ");
+                        case 0:
+                            sb.Append("  ");
+                            break;
+
+                        case 1:
+                            sb.Append($"{antsAtPoint[0].Symbol} ");
+                            break;
+
+                        default:
+                            sb.Append("X ");
+                            break;
                     }
                 }
                 sb.AppendLine();
