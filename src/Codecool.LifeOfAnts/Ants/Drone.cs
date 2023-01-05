@@ -1,10 +1,12 @@
-﻿namespace Codecool.LifeOfAnts.Ants
+﻿using System;
+
+namespace Codecool.LifeOfAnts.Ants
 {
     public class Drone : Ant
     {
         private bool _isMating;
         private int _sexyTime = 10;
-        private Drone _partner;
+        public static Drone _partner; // Save partner in Queen class
 
         public Drone(Position pos, Colony colony) : base(pos, colony)
         {
@@ -14,21 +16,17 @@
 
         public override void Act()
         {
-            MoveToQueen(out Position queen, out Position drone);
-            if (!IsAtSamePos(queen, drone))
+            var queenPosition = Colony.GetQueenPos();
+            MoveToQueen(queenPosition);
+            if (!IsAtSamePos(queenPosition, Position)) // move to Position
             {
                 return;
             }
-
             if (Colony.IsQueenInMood())
             {
                 _isMating = true;
-                _partner = this;
-            }
-
-            if (_isMating && _partner == this)
-            {
                 Mate();
+                _partner = this; // Queen has a partner
             }
             else
             {
@@ -48,7 +46,7 @@
                 default:
                     _isMating = false;
                     _sexyTime = 10;
-                    Colony.SetQueenPartner(null);
+                    Colony.ReleaseQueen();
                     KickAway();
                     return;
             }
@@ -56,47 +54,33 @@
 
         private static bool IsAtSamePos(Position queen, Position drone) => queen.X == drone.X && queen.Y == drone.Y;
 
-        private void MoveToQueen(out Position target, out Position drone)
+        private void MoveToQueen(Position target)
         {
-            target = Colony.GetQueenPos();
-            drone = _position;
-            if (target.X > drone.X)
-            {
-                MoveInDirection(Direction.East);
-            }
-            else if (target.X < drone.X)
-            {
-                MoveInDirection(Direction.West);
-            }
-            else if (target.Y > drone.Y)
-            {
-                MoveInDirection(Direction.South);
-            }
-            else if (target.Y < drone.Y)
-            {
-                MoveInDirection(Direction.North);
-            }
+            var dronePosition = Position;
+            var direction = Position.GetDirToTarget(target);
+            MoveInDirection(direction);
         }
 
         private void KickAway()
         {
-            int rdm = Program.Random.Next(Colony.Width - 1);
-            switch (Program.Random.Next(4))
+            int randomCoordinate = Program.Random.Next(Colony.Width - 1);
+            Direction direction = (Direction)Program.Random.Next(Enum.GetNames(typeof(Direction)).Length);
+            switch (direction)
             {
-                case 0:
-                    _position = new Position(0, rdm);
+                case Direction.North:
+                    Position = new Position(0, randomCoordinate);
                     break;
 
-                case 1:
-                    _position = new Position(rdm, 0);
+                case Direction.East:
+                    Position = new Position(randomCoordinate, 0);
                     break;
 
-                case 2:
-                    _position = new Position(Colony.Width - 1, rdm);
+                case Direction.South:
+                    Position = new Position(Colony.Width - 1, randomCoordinate);
                     break;
 
-                case 3:
-                    _position = new Position(rdm, Colony.Width - 1);
+                case Direction.West:
+                    Position = new Position(randomCoordinate, Colony.Width - 1);
                     break;
             }
         }

@@ -2,16 +2,14 @@
 {
     public abstract class Ant
     {
-        public Position _position;
+        public Position Position;
 
-        protected Ant(Position pos)
-        {
-            _position = pos;
-        }
+        // Get private set
 
-        protected Ant(Position pos, Colony colony)
+
+        protected Ant(Position position, Colony colony)
         {
-            _position = pos;
+            Position = position;
             Colony = colony;
         }
 
@@ -23,10 +21,10 @@
 
         protected void MoveInDirection(Direction direction)
         {
-            Position nextPos = _position.NextPosInDir(direction);
+            Position nextPos = Position.NextPosInDir(direction);
             if (IsValidMove(nextPos))
             {
-                _position = nextPos;
+                Position = nextPos;
             }
         }
 

@@ -1,4 +1,7 @@
-﻿namespace Codecool.LifeOfAnts
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace Codecool.LifeOfAnts
 {
     /// <summary>
     ///     Position struct
@@ -34,6 +37,41 @@
         public Position NextPosInDir(Direction direction)
         {
             return this + direction.ToVector();
+        }
+
+        public Direction GetRandomDirection()
+        {
+            return (Direction)Program.Random.Next(4); // Enum
+        }
+
+        public static Direction GetNextDirection(Direction direction)
+        {
+            if (direction == 0)
+            {
+                return (Direction)Enum.GetNames(typeof(Direction)).Length; ;
+            }
+            var NextDirection = (int)direction - 1;
+            return (Direction)NextDirection;
+        }
+
+        public Direction GetDirToTarget(Position target)
+        {
+            if (target.X > X)
+            {
+                return Direction.East;
+            }
+            else if (target.X < X)
+            {
+                return Direction.West;
+            }
+            else if (target.Y > Y)
+            {
+                return Direction.South;
+            }
+            else
+            {
+                return Direction.North;
+            }
         }
     }
 }

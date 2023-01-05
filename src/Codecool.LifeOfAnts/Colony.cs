@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Codecool.LifeOfAnts
@@ -20,23 +19,33 @@ namespace Codecool.LifeOfAnts
             Width = width;
             _ants = new List<Ant>();
 
-            _queen = new Queen(new Position(width / 2, width / 2));
+            _queen = new Queen(new Position(width / 2, width / 2), this);
             _ants.Add(_queen);
 
             _colonyMap = new Dictionary<Position, List<Ant>>();
         }
 
-        private List<Ant> GetAntsAtPoint(int x, int y) => _ants.Where(ant => ant._position.X == x && ant._position.Y == y).ToList();
+        private List<Ant> GetAntsAtPoint(int x, int y) => _ants.Where(ant => ant.Position.X == x && ant.Position.Y == y).ToList();
+
+        // Change x, y to Position;
 
         private Position GetRandomPosInColony() => new(Program.Random.Next(Width), Program.Random.Next(Width));
 
+        // Move to Position class;
+
         public void Update() => _ants.ForEach(ant => ant.Act());
 
-        public Position GetQueenPos() => _queen._position;
+        public Position GetQueenPos() => _queen.Position;
 
         public bool IsQueenInMood() => _queen.IsReady();
 
         public void SetQueenPartner(Drone drone) => _queen.Partner = drone;
+
+        // move to Queen class, set _isWaitingForDrone = false there in a method called SetPartner(Drone drone);
+        public void ReleaseQueen()
+        {
+            _queen.ReleaseQueen();
+        }
 
         public void GenerateAnts(int droneCount, int workerCount, int soldierCount)
         {
@@ -55,9 +64,10 @@ namespace Codecool.LifeOfAnts
                 _ants.Add(new Soldier(GetRandomPosInColony(), this));
             }
 
-            foreach (Ant ant in _ants.Where(ant => !_colonyMap.ContainsKey(ant._position)))
+            // AddAntToColony(Ant ant) { _ants.Add(ant); isPosInDict ? _colonyMap[pos].Add(ant) : _colonyMap.Add(pos, new List<Ant> { ant }); }
+            foreach (Ant ant in _ants)//.Where(ant => !_colonyMap.ContainsKey(ant.Position)))
             {
-                _colonyMap.Add(ant._position, new List<Ant>() { ant });
+                _colonyMap.Add(ant.Position, new List<Ant>() { ant });
             }
         }
 

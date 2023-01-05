@@ -13,25 +13,10 @@ namespace Codecool.LifeOfAnts.Ants
         public override void Act()
         {
             Direction target = (Direction)Program.Random.Next(0, 4);
+
             MoveInDirection(target);
-            switch (target)
-            {
-                case Direction.North:
-                    MoveInDirection(Direction.West);
-                    break;
-
-                case Direction.South:
-                    MoveInDirection(Direction.East);
-                    break;
-
-                case Direction.West:
-                    MoveInDirection(Direction.South);
-                    break;
-
-                case Direction.East:
-                    MoveInDirection(Direction.North);
-                    break;
-            }
+            var nextDirection = Position.GetNextDirection(target);
+            MoveInDirection(nextDirection);
         }
     }
 }
